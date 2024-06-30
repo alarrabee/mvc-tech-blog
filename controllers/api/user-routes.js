@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
       if (!validPassword) {
         res
           .status(400)
-          .json({ message: 'Incorrect email or password. Please try again!' });
+          .json({ message: 'Incorrect username or password. Please try again!' });
         return;
       }
   

@@ -11,6 +11,7 @@ const sequelize = require('./config/connection.js');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+//middleware to handle session management
 const sess = {
     secret: 'Super secret secret',
     cookie: {},
