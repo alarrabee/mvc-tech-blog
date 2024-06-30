@@ -1,13 +1,26 @@
 const express = require('express'); //middleware, routing, HTTP requests, template engines, static file sharing, RESTfulAPIs
-// const session = require('express-session'); //session management, session persistence, cookie handling
+const session = require('express-session'); //session management, session persistence, cookie handling
 const exphbs = require('express-handlebars'); //template rendering, layouts, partials, helpers
+const SequelizeStore = require('connect-session-sequelize')(session.Store); //configures a session store that uses Sequelize to persist session data in a SQL database
 
-const routes = require('./routes');
+const routes = require('./controllers');
 const sequelize = require('./config/connection.js');
 
 //sets up the Express app
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const sess = {
+    secret: 'Super secret secret',
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+      db: sequelize,
+    }),
+  };
+  
+  app.use(session(sess));
 
 const hbs = exphbs.create();
 
