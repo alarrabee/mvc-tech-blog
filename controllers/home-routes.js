@@ -1,10 +1,33 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Post } = require('../models');
 
-
+//renders homepage
 router.get('/', async (req, res) => {
     res.render('homepage');
 })
+
+//renders dashboard
+router.get('/dashboard', async (req, res) => {
+    res.render('dashboard');
+})
+
+
+//CREATE new post
+router.post('/dashboard', async (req, res) => {
+    try {
+      const dbPostData = await Post.create({
+        title: req.body.title,
+        content: req.body.content,
+      });
+        res.status(200).json(dbPostData);
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
+
 
 //Login route
 router.get('/login', (req, res) => {
