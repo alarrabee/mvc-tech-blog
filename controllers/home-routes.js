@@ -2,9 +2,29 @@ const router = require('express').Router();
 const { User, Post } = require('../models');
 
 //renders homepage
+// router.get('/', async (req, res) => {
+//     res.render('homepage');
+// })
+
+//GET all posts for homepage
 router.get('/', async (req, res) => {
-    res.render('homepage');
-})
+    try{
+        const dbPostData = await Post.findAll();
+        const posts = dbPostData.map((post) => 
+            post.get({ plain: true })
+        );
+        res.render('homepage', {
+            posts,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err)
+    }
+});
+
+
+
+
 
 //renders dashboard
 router.get('/dashboard', async (req, res) => {
