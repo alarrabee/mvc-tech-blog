@@ -6,7 +6,7 @@ const { User, Post } = require('../models');
 //     res.render('homepage');
 // })
 
-//GET all posts for homepage
+//GET all posts for homepage and render homepage
 router.get('/', async (req, res) => {
     try{
         const dbPostData = await Post.findAll();
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
 
 
-//GET one post
+//GET one post and render post
 router.get('/post/:id', async (req, res) => {
     try {
         const dbPostData = await Post.findByPk(req.params.id);
@@ -55,6 +55,20 @@ router.post('/dashboard', async (req, res) => {
         content: req.body.content,
       });
         res.status(200).json(dbPostData);
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
+  //CREATE new comment
+  router.post('/post', async (req, res) => {
+    try {
+      const dbCommentData = await Post.create({
+        comment: req.body.comment_text,
+      });
+        res.status(200).json(dbCommentData);
 
     } catch (err) {
       console.log(err);
