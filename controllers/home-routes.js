@@ -39,12 +39,48 @@ router.get('/post/:id', async (req, res) => {
 
 
 
-
-
 //renders dashboard
+// router.get('/dashboard', async (req, res) => {
+//     res.render('dashboard');
+// })
+
+//GET all posts for a specific user and render to dashboard
 router.get('/dashboard', async (req, res) => {
-    res.render('dashboard');
-})
+    try {
+        const userId = req.session.user.user_id;
+
+        if (!userId) {
+            return res.redirect('/login');
+        }
+
+        const dbPostData = await Post.findAll({
+            where: {
+                user_id: userId
+            },
+            include: [{
+                model: User,
+                attributes: ['username']
+            }]
+        });
+
+        const posts = dbPostData.map((post) => {
+            post.get({ plain:true })
+        });
+
+        res.render('dashboard', {
+            posts,
+            user: req.user,
+        });
+    } catch(err) {
+        console.log(err);
+        res.status(500).json;
+    }
+});
+
+
+
+
+
 
 
 //CREATE new post
