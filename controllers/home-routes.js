@@ -49,7 +49,7 @@ router.get('/post/:id', async (req, res) => {
 router.get('/dashboard', async (req, res) => {
     try {
         console.log(req.session); //debug*
-        const userId = req.session.user_id;  //corrected*
+        const userId = req.session.user_id;
 
         if (!userId) {
             console.log('No user ID found in session, redirecting to login');
@@ -57,7 +57,7 @@ router.get('/dashboard', async (req, res) => {
         }
 
         //fetch user specific posts
-        console.log('Fetching posts for user ID:', userId);
+        console.log('Fetching posts for user ID:', userId); //debugging
         const dbPostData = await Post.findAll({
             where: {
                 user_id: userId
@@ -68,17 +68,16 @@ router.get('/dashboard', async (req, res) => {
             }]
         });
 
-        console.log('Fetched posts data:', dbPostData);
-        const posts = dbPostData.map((post) => {
-            post.get({ plain:true })
-        });
+        console.log('Fetched posts data:', dbPostData); //debugging
+        const posts = dbPostData.map(post => post.get({ plain: true }));
         
-        console.log('Rendering dashboard with posts:', posts);
+        console.log('Rendering dashboard with posts:', posts); //debugging
         res.render('dashboard', {
             posts,
+            user: req.user 
         });
     } catch(err) {
-        console.log('Error in dashboard route:', err);
+        console.log('Error in dashboard route:', err); //debugging
         res.status(500).json(err);
     }
 });
@@ -92,11 +91,11 @@ router.post('/dashboard', async (req, res) => {
       const userId = req.session.user_id; // Get user_id from session 
   
       if (!userId) {
-        console.error('No user ID found in session'); // Debugging
+        console.error('No user ID found in session'); //debugging
         return res.status(401).json({ message: 'You must be logged in to create a post.' });
       }
   
-      console.log('Creating post for user ID:', userId); // Debugging
+      console.log('Creating post for user ID:', userId); //debugging
   
       const dbPostData = await Post.create({
         title: req.body.title,
