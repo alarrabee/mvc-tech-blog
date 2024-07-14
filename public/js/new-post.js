@@ -5,16 +5,23 @@ const newPostFormHandler = async (event) => {
     const content = document.querySelector('#post-content').value.trim();
   
     if (title && content) {
-      const response = await fetch('/dashboard', {
-        method: 'POST',
-        body: JSON.stringify({ title, content }),
-        headers: { 'Content-Type': 'application/json' },
-      });
+      try {
+        const response = await fetch('/dashboard', {
+          method: 'POST',
+          body: JSON.stringify({ title, content }),
+          headers: { 'Content-Type': 'application/json' },
+        });
   
-      if (response.ok) {
-        document.location.replace('/');
-      } else {
-        alert('Failed to create post.'); 
+        if (response.ok) {
+          document.location.replace('/');
+        } else {
+          const errorText = await response.text(); // debugging: get error text
+          console.error('Error:', errorText); // debugging: log error
+          alert('Failed to create post.'); 
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        alert('Failed to create post.');
       }
     }
   };

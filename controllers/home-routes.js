@@ -44,41 +44,44 @@ router.get('/post/:id', async (req, res) => {
 //     res.render('dashboard');
 // })
 
-//GET all posts for a specific user and render to dashboard
+
+//GET all posts for one user and render posts
 router.get('/dashboard', async (req, res) => {
     try {
-        const userId = req.session.user.user_id;
+        console.log(req.session); //debug*
+        const userId = req.session.user_id;  //corrected*
 
         if (!userId) {
+            console.log('No user ID found in session, redirecting to login');
             return res.redirect('/login');
         }
 
+        //fetch user specific posts
+        console.log('Fetching posts for user ID:', userId);
         const dbPostData = await Post.findAll({
             where: {
                 user_id: userId
             },
             include: [{
                 model: User,
-                attributes: ['username']
+                attributes: ['username']  //include user information
             }]
         });
 
+        console.log('Fetched posts data:', dbPostData);
         const posts = dbPostData.map((post) => {
             post.get({ plain:true })
         });
-
+        
+        console.log('Rendering dashboard with posts:', posts);
         res.render('dashboard', {
             posts,
-            user: req.user,
         });
     } catch(err) {
-        console.log(err);
-        res.status(500).json;
+        console.log('Error in dashboard route:', err);
+        res.status(500).json(err);
     }
 });
-
-
-
 
 
 
@@ -86,31 +89,42 @@ router.get('/dashboard', async (req, res) => {
 //CREATE new post
 router.post('/dashboard', async (req, res) => {
     try {
+      const userId = req.session.user_id; // Get user_id from session 
+  
+      if (!userId) {
+        console.error('No user ID found in session'); // Debugging
+        return res.status(401).json({ message: 'You must be logged in to create a post.' });
+      }
+  
+      console.log('Creating post for user ID:', userId); // Debugging
+  
       const dbPostData = await Post.create({
         title: req.body.title,
         content: req.body.content,
+        user_id: userId, // Include user_id from session
       });
-        res.status(200).json(dbPostData);
-
+  
+      res.status(200).json(dbPostData);
     } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
+      console.error('Server error:', err);
+      res.status(500).json(err); // Send detailed error to client
     }
   });
+
 
   //CREATE new comment
-  router.post('/post', async (req, res) => {
-    try {
-      const dbCommentData = await Post.create({
-        comment: req.body.comment_text,
-      });
-        res.status(200).json(dbCommentData);
+//   router.post('/post', async (req, res) => {
+//     try {
+//       const dbCommentData = await Post.create({
+//         comment: req.body.comment_text,
+//       });
+//         res.status(200).json(dbCommentData);
 
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  });
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).json(err);
+//     }
+//   });
 
 
 
