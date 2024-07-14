@@ -20,7 +20,9 @@ router.post('/', async (req, res) => {
     }
   });
 
-  // Login
+
+
+  //Login
   router.post('/login', async (req, res) => {
     try {
       const dbUserData = await User.findOne({
@@ -30,27 +32,23 @@ router.post('/', async (req, res) => {
       });
   
       if (!dbUserData) {
-        res
-          .status(400)
-          .json({ message: 'Incorrect username or password. Please try again!' });
+        res.status(400).json({ message: 'Incorrect username or password. Please try again!' });
         return;
       }
   
       const validPassword = await dbUserData.checkPassword(req.body.password);
   
       if (!validPassword) {
-        res
-          .status(400)
-          .json({ message: 'Incorrect username or password. Please try again!' });
+        res.status(400).json({ message: 'Incorrect username or password. Please try again!' });
         return;
       }
   
       req.session.save(() => {
+        console.log("req session", req.session); //debugging
+        req.session.user_id = dbUserData.id;
         req.session.loggedIn = true;
   
-        res
-          .status(200)
-          .json({ user: dbUserData, message: 'You are now logged in!' });
+        res.status(200).json({ user: dbUserData, message: 'You are now logged in!' });
       });
     } catch (err) {
       console.log(err);
@@ -58,6 +56,11 @@ router.post('/', async (req, res) => {
     }
   });
 
+
+
+
+
+  
   //Logout
   router.post('/logout', (req, res) => {
     if (req.session.loggedIn) {
