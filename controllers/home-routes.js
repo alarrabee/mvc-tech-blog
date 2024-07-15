@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Post } = require('../models');
+const { User, Post, Comment } = require('../models');
 
 //renders homepage
 // router.get('/', async (req, res) => {
@@ -27,15 +27,55 @@ router.get('/', async (req, res) => {
 //GET one post and render post
 router.get('/post/:id', async (req, res) => {
     try {
-        const dbPostData = await Post.findByPk(req.params.id);
+        const dbPostData = await Post.findByPk(req.params.id, {
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                },
+                {
+                    model: Comment,
+                    include: {
+                        model: User,
+                        attributes: ['username']
+                    }
+                }
+            ]
+        });
+
+        if(!dbPostData) {
+            res.status(404).json({ message: 'No post with this id' });
+        }
+
         const post = dbPostData.get({ plain: true });
 
-        res.render('post', {post});
+        res.render('post', {
+            post,
+            loggedIn: req.session.loggedIn
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
     }
 });
+
+
+  //CREATE new comment
+router.post('/post/:id/comment', async (req, res) => {
+    try {
+        const dbCommentData = await Comment.create({
+            comment_text: req.body.commentText,
+            user_id: req.session.user_id,
+            post_id: req.params.id
+        });
+
+        res.sendStatus(200).json(dbCommentData);
+    } catch(err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 
 
 
@@ -49,7 +89,7 @@ router.get('/post/:id', async (req, res) => {
 router.get('/dashboard', async (req, res) => {
     try {
         console.log(req.session); //debug*
-        const userId = req.session.user_id;  //corrected*
+        const userId = req.session.user_id;
 
         if (!userId) {
             console.log('No user ID found in session, redirecting to login');
@@ -57,7 +97,7 @@ router.get('/dashboard', async (req, res) => {
         }
 
         //fetch user specific posts
-        console.log('Fetching posts for user ID:', userId);
+        console.log('Fetching posts for user ID:', userId); //debugging
         const dbPostData = await Post.findAll({
             where: {
                 user_id: userId
@@ -68,17 +108,16 @@ router.get('/dashboard', async (req, res) => {
             }]
         });
 
-        console.log('Fetched posts data:', dbPostData);
-        const posts = dbPostData.map((post) => {
-            post.get({ plain:true })
-        });
+        console.log('Fetched posts data:', dbPostData); //debugging
+        const posts = dbPostData.map(post => post.get({ plain: true }));
         
-        console.log('Rendering dashboard with posts:', posts);
+        console.log('Rendering dashboard with posts:', posts); //debugging
         res.render('dashboard', {
             posts,
+            user: req.user 
         });
     } catch(err) {
-        console.log('Error in dashboard route:', err);
+        console.log('Error in dashboard route:', err); //debugging
         res.status(500).json(err);
     }
 });
@@ -92,11 +131,11 @@ router.post('/dashboard', async (req, res) => {
       const userId = req.session.user_id; // Get user_id from session 
   
       if (!userId) {
-        console.error('No user ID found in session'); // Debugging
+        console.error('No user ID found in session'); //debugging
         return res.status(401).json({ message: 'You must be logged in to create a post.' });
       }
   
-      console.log('Creating post for user ID:', userId); // Debugging
+      console.log('Creating post for user ID:', userId); //debugging
   
       const dbPostData = await Post.create({
         title: req.body.title,
@@ -125,6 +164,10 @@ router.post('/dashboard', async (req, res) => {
 //       res.status(500).json(err);
 //     }
 //   });
+
+
+
+
 
 
 

@@ -1,19 +1,29 @@
 <section class="card" style="border: 1px solid black">
     {{!-- <a href="/post/{{id}}">...</a> --}}
-        <h3>{{post.title}}</h3>
-        <p>{{post.content}}</p>
+    <h3>{{post.title}}</h3>
+    <p>{{post.content}}</p>
+    <p>Author: {{post.user.username}}</p>
+</section>
+<section>
+    <h2>Comments:</h2>
+    {{#each post.comments}}
+    {{> comment-details}}
+    {{/each}}
 </section>
 
-<div>
-    <form class="new-comment-form">
+<!--form to submit user comments-->
+{{#if loggedIn}}
     <div>
-        <label for="comment-content">Comment Here</label>
-        <input class="form-input" type="text" id="comment-content" />
+        <form class="new-comment-form">
+        <div>
+            <label for="comment-text">Comment Here</label>
+            <input class="form-input" type="text" id="comment-test" />
+        </div>
+        <div>
+            <button class="btn" type="submit">Submit</button>
+        </div>
+        </form>
     </div>
-    <div>
-        <button class="btn" type="submit">Submit</button>
-    </div>
-    </form>
-</div>
+{{/if}}
 
 <script src="/js/new-comment.js"></script>

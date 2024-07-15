@@ -1,5 +1,8 @@
 <h1>Your Dashboard</h1>
 
+{{#each posts}}
+  {{> user-post-details}}
+{{/each}}
 
 <div>
     <form class="new-post-form">
