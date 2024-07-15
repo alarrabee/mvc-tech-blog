@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Post } = require('../models');
+const { User, Post, Comment } = require('../models');
 
 //renders homepage
 // router.get('/', async (req, res) => {
@@ -27,15 +27,55 @@ router.get('/', async (req, res) => {
 //GET one post and render post
 router.get('/post/:id', async (req, res) => {
     try {
-        const dbPostData = await Post.findByPk(req.params.id);
+        const dbPostData = await Post.findByPk(req.params.id, {
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                },
+                {
+                    model: Comment,
+                    include: {
+                        model: User,
+                        attributes: ['username']
+                    }
+                }
+            ]
+        });
+
+        if(!dbPostData) {
+            res.status(404).json({ message: 'No post with this id' });
+        }
+
         const post = dbPostData.get({ plain: true });
 
-        res.render('post', {post});
+        res.render('post', {
+            post,
+            loggedIn: req.session.loggedIn
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
     }
 });
+
+
+  //CREATE new comment
+router.post('/post/:id/comment', async (req, res) => {
+    try {
+        const dbCommentData = await Comment.create({
+            comment_text: req.body.commentText,
+            user_id: req.session.user_id,
+            post_id: req.params.id
+        });
+
+        res.sendStatus(200).json(dbCommentData);
+    } catch(err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 
 
 
@@ -124,6 +164,10 @@ router.post('/dashboard', async (req, res) => {
 //       res.status(500).json(err);
 //     }
 //   });
+
+
+
+
 
 
 
