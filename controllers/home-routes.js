@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../models');
+const withAuth = require('../utils/auth');
 
 //renders homepage
 // router.get('/', async (req, res) => {
@@ -24,8 +25,8 @@ router.get('/', async (req, res) => {
 
 
 
-//GET one post and render post
-router.get('/post/:id', async (req, res) => {
+//GET one post and render post with comments
+router.get('/post/:id', withAuth, async (req, res) => { 
     try {
         const dbPostData = await Post.findByPk(req.params.id, {
             include: [
@@ -86,7 +87,7 @@ router.post('/post/:id/comment', async (req, res) => {
 
 
 //GET all posts for one user and render posts
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
     try {
         console.log(req.session); //debug*
         const userId = req.session.user_id;
@@ -164,10 +165,6 @@ router.post('/dashboard', async (req, res) => {
 //       res.status(500).json(err);
 //     }
 //   });
-
-
-
-
 
 
 
