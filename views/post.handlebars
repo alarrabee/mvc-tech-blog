@@ -1,14 +1,23 @@
 <!--display a single post-->
-<section class="card" style="border: 1px solid blue">
+{{!-- <section class="card" style="border: 1px solid blue">
     <h3>{{post.title}}</h3>
     <p>{{post.content}}</p>
     <p>Author: {{post.user.username}}</p>
+</section> --}}
+<br>
+<section class="card">
+    <a href="/post/{{id}}">
+        <div class="post-header">
+            <h2>{{post.title}}</h2>
+            <p>Posted by {{post.user.username}} on {{formatDate post.createdAt}}</p>
+        </div>
+        <p class="text">{{post.content}}</p>
+    </a>
 </section>
 
 
 <!--set up each statement to display all comments for the post-->
 <section>
-    <h2>Comments:</h2>
     {{#each post.comments}}
     {{> comment-details}}
     {{/each}}
@@ -17,11 +26,16 @@
 
 <!--form to submit a new comment-->
 {{#if loggedIn}}
-    <div>
-        <form class="new-comment-form">
-            <textarea id="comment-text" required></textarea>
-            <button type="submit">Submit Comment</button>
-        </form>
+    <div class="post-form-card">
+        <div class="post-header">
+            <h2>Leave a comment:</h2>
+        </div><br>
+        <form class="new-post-form">
+            <input id="comment-text"></input>
+            <div>
+            <button type="submit">Submit</button>
+            <div>
+        </form><br>
     </div>
 {{/if}}
 

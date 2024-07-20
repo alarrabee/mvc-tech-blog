@@ -1,5 +1,5 @@
 <!--partial used for comments displayed under post-->
-<section class="comment" style="border: 1px solid black">
-  <p>{{comment_text}}</p>
-  <p>Posted by user {{user.username}} on {{formatDate createdAt}}</p>
+<section class="comment-card">
+    <p class="comment-author">Posted by {{user.username}} on {{formatDate createdAt}}</p>
+    <p class="comment">{{comment_text}}</p>
 </section>
