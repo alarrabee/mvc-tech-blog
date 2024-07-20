@@ -1,4 +1,4 @@
-//logs the user out when logout button is clicked
+//logs the user out when logout is clicked
 const logout = async () => {
     const response = await fetch('/api/users/logout', {
       method: 'POST',
@@ -7,8 +7,9 @@ const logout = async () => {
   
     if (response.ok) {
       document.location.replace('/');
+      alert('You are now logged out');
     } else {
-      alert('Failed to log out.');
+      alert('Failed to log out');
     }
   };
   

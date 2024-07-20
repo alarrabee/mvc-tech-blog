@@ -14,8 +14,9 @@ const loginFormHandler = async (event) => {
   
       if (response.ok) {
         document.location.replace('/');
+        alert('You are now logged in!');
       } else {
-        alert('Failed to log in.');
+        alert('Failed to log in');
       }
     }
   };
