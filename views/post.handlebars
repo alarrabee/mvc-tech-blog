@@ -1,9 +1,12 @@
-<section class="card" style="border: 1px solid black">
-    {{!-- <a href="/post/{{id}}">...</a> --}}
+<!--display a single post-->
+<section class="card" style="border: 1px solid blue">
     <h3>{{post.title}}</h3>
     <p>{{post.content}}</p>
     <p>Author: {{post.user.username}}</p>
 </section>
+
+
+<!--set up each statement to display all comments for the post-->
 <section>
     <h2>Comments:</h2>
     {{#each post.comments}}
@@ -11,17 +14,13 @@
     {{/each}}
 </section>
 
-<!--form to submit user comments-->
+
+<!--form to submit a new comment-->
 {{#if loggedIn}}
     <div>
         <form class="new-comment-form">
-        <div>
-            <label for="comment-text">Comment Here</label>
-            <input class="form-input" type="text" id="comment-test" />
-        </div>
-        <div>
-            <button class="btn" type="submit">Submit</button>
-        </div>
+            <textarea id="comment-text" required></textarea>
+            <button type="submit">Submit Comment</button>
         </form>
     </div>
 {{/if}}

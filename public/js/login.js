@@ -1,3 +1,4 @@
+//form handler used for logging in
 const loginFormHandler = async (event) => {
     event.preventDefault();
   
@@ -13,12 +14,20 @@ const loginFormHandler = async (event) => {
   
       if (response.ok) {
         document.location.replace('/');
+        alert('You are now logged in!');
       } else {
-        alert('Failed to log in.');
+        alert('Failed to log in');
       }
     }
   };
+
+  document
+  .querySelector('.login-form')
+  .addEventListener('submit', loginFormHandler);
+
+
   
+  //form handler used for signing up
   const signupFormHandler = async (event) => {
     event.preventDefault();
   
@@ -39,10 +48,6 @@ const loginFormHandler = async (event) => {
       }
     }
   };
-  
-  document
-    .querySelector('.login-form')
-    .addEventListener('submit', loginFormHandler);
   
   document
     .querySelector('.signup-form')

@@ -8,6 +8,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store); //co
 
 const routes = require('./controllers'); //imports controllers module containing route handlers for application
 const sequelize = require('./config/connection.js'); //imports sequelize module that establishes a connection with the database, defines models, queries the database, manages data
+const helpers = require('./utils/helpers');
 
 
 //sets up the Express app
@@ -33,7 +34,7 @@ const sess = {
 app.use(session(sess));
   
 
-const hbs = exphbs.create(); //initializes an instance of handlebars engine
+const hbs = exphbs.create({ helpers }); //initializes an instance of handlebars engine
 
 //set handlebars as the default template engine
 app.engine('handlebars', hbs.engine);

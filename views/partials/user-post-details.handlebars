@@ -1,7 +1,8 @@
-<section class="card" style="border: 1px solid black">
+<!--partial used for posts displayed on dashboard-->
+<section class="card" style="border: 1px solid red">
   <a href="/post/{{id}}">
     <h3>{{title}}</h3>
     <p>{{content}}</p>
-    <p>Author: {{user.username}}</p>
+    <p>Posted by {{user.username}} on {{formatDate createdAt}}</p>
   </a>
 </section>

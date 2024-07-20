@@ -1,9 +1,11 @@
 <h1>Your Dashboard</h1>
 
+<!--set up each statement to display all posts for logged in user on the dashboard-->
 {{#each posts}}
   {{> user-post-details}}
 {{/each}}
 
+<!--form to submit a new post-->
 <div>
     <form class="new-post-form">
     <div>
