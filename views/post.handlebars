@@ -14,14 +14,18 @@
 <!--form to submit user comments-->
 {{#if loggedIn}}
     <div>
-        <form class="new-comment-form">
+        {{!-- <form class="new-comment-form">
         <div>
             <label for="comment-text">Comment Here</label>
-            <input class="form-input" type="text" id="comment-test" />
+            <input class="form-input" type="text" id="comment-text" />
         </div>
         <div>
             <button class="btn" type="submit">Submit</button>
         </div>
+        </form> --}}
+        <form class="new-comment-form">
+            <textarea id="comment-text" required></textarea>
+            <button type="submit">Submit Comment</button>
         </form>
     </div>
 {{/if}}

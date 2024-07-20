@@ -61,21 +61,7 @@ router.get('/post/:id', withAuth, async (req, res) => {
 });
 
 
-  //CREATE new comment
-router.post('/post/:id/comment', async (req, res) => {
-    try {
-        const dbCommentData = await Comment.create({
-            comment_text: req.body.commentText,
-            user_id: req.session.user_id,
-            post_id: req.params.id
-        });
 
-        res.sendStatus(200).json(dbCommentData);
-    } catch(err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
 
 
 
@@ -150,6 +136,39 @@ router.post('/dashboard', async (req, res) => {
       res.status(500).json(err); // Send detailed error to client
     }
   });
+
+  //CREATE new comment
+  router.post('/post/:id/comment', async (req, res) => {
+    try {
+        const dbCommentData = await Comment.create({
+            comment_text: req.body.comment_text,
+            user_id: req.session.user_id,
+            post_id: req.params.id
+        });
+
+        res.status(200).json(dbCommentData);
+    } catch(err) {
+        console.log('Server error:', err);
+        res.status(500).json(err);
+    }
+});
+
+
+  //CREATE new comment
+//   router.post('/post/:id/comment', async (req, res) => {
+//     try {
+//         const dbCommentData = await Comment.create({
+//             comment_text: req.body.commentText,
+//             user_id: req.session.user_id,
+//             post_id: req.params.id
+//         });
+
+//         res.sendStatus(200).json(dbCommentData);
+//     } catch(err) {
+//         console.log(err);
+//         res.status(500).json(err);
+//     }
+// });
 
 
   //CREATE new comment
