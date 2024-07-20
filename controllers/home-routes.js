@@ -11,7 +11,14 @@ const withAuth = require('../utils/auth');
 //GET all posts for homepage and render homepage
 router.get('/', async (req, res) => {
     try{
-        const dbPostData = await Post.findAll();
+        const dbPostData = await Post.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
         const posts = dbPostData.map((post) => 
             post.get({ plain: true })
         );
