@@ -1,3 +1,4 @@
+//form handler used for submitting a new post
 const newPostFormHandler = async (event) => {
     event.preventDefault();
   
@@ -15,8 +16,8 @@ const newPostFormHandler = async (event) => {
         if (response.ok) {
           document.location.replace('/');
         } else {
-          const errorText = await response.text(); // debugging: get error text
-          console.error('Error:', errorText); // debugging: log error
+        //   const errorText = await response.text(); // debugging: get error text
+        //   console.error('Error:', errorText); // debugging: log error
           alert('Failed to create post.'); 
         }
       } catch (err) {
