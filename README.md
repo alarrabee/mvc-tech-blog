@@ -63,6 +63,9 @@ THEN I am able to view posts and comments but I am prompted to log in again befo
 ### User Dashboard
 ![image](https://github.com/user-attachments/assets/fa21dcbc-b265-4cf9-87f7-72079fa9dfa6)
 
+### Update posts
+![image](https://github.com/user-attachments/assets/e8f783fd-6b93-4695-a42f-19d477d3210c)
+
 ### Post with comments
 ![image](https://github.com/user-attachments/assets/00e0f9a0-e256-4ace-bc24-9a998c2ab824)
 
