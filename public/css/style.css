@@ -2,6 +2,17 @@
     font-family:Arial, Helvetica, sans-serif
 }
 
+
+
+
+/*BODY*/
+body {
+    background-color: aliceblue;
+}
+
+
+
+
 /* NAVIGATION */
 nav {
     background-color: #3d3c3c;
@@ -9,7 +20,8 @@ nav {
     margin-left: 10px;
     margin-right: 10px;
 }
-  
+ 
+
 nav a {
 float: left;
 color:  rgb(219, 234, 243);
@@ -19,15 +31,14 @@ text-decoration: none;
 font-size: 20px;
 }
 
+
 a {
     color: inherit; /* removes blue colors for links */
     text-decoration: inherit; /* no underline */
-  }
-
-/*BODY*/
-body {
-    background-color: aliceblue;
 }
+
+
+
 
 /*PAGE TITLE*/
 h1 {
@@ -35,6 +46,8 @@ h1 {
     margin-left: 10px;
     font-size: 50px;
 }
+
+
 
 
   /*POST CARD*/
@@ -45,6 +58,7 @@ h1 {
     border: 1px, solid, #3d3c3c;  
 }
 
+
 .post-header {
     display: flex;
     justify-content: space-between;
@@ -53,14 +67,17 @@ h1 {
     background-color:#3d3c3c
 }
 
+
 .post-header h2 {
     margin: 10px;
     font-size: 30px;
 }
 
+
 .post-header p {
     margin: 10px;
 }
+
 
 .text {
     margin-left: 10px;
@@ -68,10 +85,17 @@ h1 {
     font-size: 20px;
 }
 
+
+
+
 /*COMMENTS*/
 .comment-card {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 30px;
     border: 1px, solid, #3d3c3c;  
 }
+
 
 .comment-header {
     display: flex;
@@ -81,23 +105,29 @@ h1 {
     background-color:#3d3c3c
 }
 
+
 .comment-header h2 {
     margin: 10px;
     font-size: 25px;
 }
 
+
 .comment-author {
     margin-left: 10px;
     margin-right: 10px;
-    font-size: 20px;
+    font-size: 15px;
     font-style: italic;
 }
+
 
 .comment {
     margin-left: 10px;
     margin-right: 10px;
     font-size: 20px;
 }
+
+
+
 
 /*FORMS*/
 #comment-text {
@@ -106,20 +136,24 @@ h1 {
     height: 100px;
 }
 
+
 .post-form-card {
     margin: 10px;
     font-size: 25px;
     border: 1px solid #3d3c3c;
 }
 
+
 .new-post-form {
     margin: 20px;
 }
+
 
 #post-title {
     width: 100%;
     height: 25px;
 }
+
 
 #post-content {
     margin-top: 10px;
@@ -127,9 +161,12 @@ h1 {
     height: 100px;
 }
 
+
 .new-post-form-title {
     font-size: 20px !important;
 }
+
+
 
 
 /*LOGIN PAGE*/
@@ -140,25 +177,36 @@ h1 {
 
 
 
-
 /*SUBMIT BUTTONS*/
 button {
     background-color:#3d3c3c;
     border: none;
     color:aliceblue;
-    padding: 15px 32px;
+    padding: 10px 15px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 15px;
     margin: 4px 2px;
     cursor: pointer;
 }
+
 
 .authbtn {
     margin-bottom: 40px;
 }
 
+
 .auth-input {
     margin: 10px;
 }
+
+
+
+
+/*UPDATE POST MODAL - hidden by default*/
+.modal {
+    display: none;
+}
+
+
