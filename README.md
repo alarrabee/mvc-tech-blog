@@ -1,8 +1,12 @@
-# mvc-tech-blog
 U of M Boot Camp Module 14 Challenge
 
-## User Story
+# Description
+This is the week 14 Module Challenge for the U of M Coding Bootcamp
 
+# Model-View-Controller: Tech Blog
+The challenge was to build a CMS-style blog site from scratch where developers can publish their blog posts as well as comment on other developers’ posts. The app will follow the MVC structure, use Handlebars.js as the templating language, Sequelize as the ORM, and the express-session npm package for authentication.
+
+## User Story
 ```md
 AS A developer who writes about tech
 I WANT a CMS-style blog site
@@ -10,7 +14,6 @@ SO THAT I can publish articles, blog posts, and my thoughts and opinions
 ```
 
 ## Acceptance Criteria
-
 ```md
 GIVEN a CMS-style blog site
 WHEN I visit the site for the first time
@@ -46,3 +49,21 @@ THEN I am signed out of the site
 WHEN I am idle on the site for more than a set time
 THEN I am able to view posts and comments but I am prompted to log in again before I can add, update, or delete posts
 ```
+## Link to Deployed Application
+
+
+## Application Screenshots
+
+### Homepage
+![image](https://github.com/user-attachments/assets/7ee9b62b-d805-4fd7-a1c2-db674f56831f)
+
+### Login page
+![image](https://github.com/user-attachments/assets/bba2f25e-9879-45a2-a4fb-143adab76839)
+
+### User Dashboard
+![image](https://github.com/user-attachments/assets/fa21dcbc-b265-4cf9-87f7-72079fa9dfa6)
+
+### Post with comments
+![image](https://github.com/user-attachments/assets/00e0f9a0-e256-4ace-bc24-9a998c2ab824)
+
+
