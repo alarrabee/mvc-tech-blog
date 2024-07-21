@@ -14,7 +14,7 @@ const newPostFormHandler = async (event) => {
         });
   
         if (response.ok) {
-          document.location.replace('/');
+          document.location.replace('/dashboard');
         } else {
         //   const errorText = await response.text(); // debugging: get error text
         //   console.error('Error:', errorText); // debugging: log error
