@@ -7,4 +7,23 @@
         </div>
         <p class="text">{{content}}</p>
     </a>
+    <button class="btn" onclick="openUpdateForm('{{id}}', '{{title}}', '{{content}}')">Update</button>
+    <button class="btn" onclick="deletePost('{{id}}')">Delete</button>
 </section>
+
+<!--modal for updating a post-->
+<div id="updateModal" class="modal">
+    <div class="modal-content">
+        <form class="update-post-form">
+            <input type="hidden" id="post-id">
+            <input type="text" id="post-title" required>
+            <textarea id="post-content" required></textarea>
+            <button type="submit">Update Post</button>
+            <button class="cancle">Cancle</button>
+        </form>
+    </div>
+</div>
+
+
+<script src="/js/delete-post.js"></script>
+<script src="/js/update-post.js"></script>

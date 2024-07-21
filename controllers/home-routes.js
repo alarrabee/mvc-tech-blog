@@ -145,6 +145,76 @@ router.post('/dashboard', async (req, res) => {
 
 
 
+  //DELETE post
+  router.delete('/delete-post/:id', async (req, res) => {
+    try {
+
+        const userId = req.session.user_id; // Get user_id from session 
+  
+        if (!userId) {
+          // console.error('No user ID found in session'); //debugging
+          return res.status(401).json({ message: 'You must be logged in to delete a post.' });
+        }
+    
+        const postId = req.params.id;
+
+        const dbPostData = await Post.destroy({
+            where: {
+                id: postId,
+                user_id: userId,
+            },
+        });
+
+        if (!dbPostData) {
+            res.status(404).json({ message: 'No post found with this id' });
+            return;
+          }
+
+        res.status(200).json({ message: 'Post successfully deleted!' });
+
+    } catch (err) {
+        console.error('Error in delete route:', err);
+        res.status(500).json(err);      
+    }
+  });
+
+
+//UPDATE post
+router.put('/update-post/:id', withAuth, async (req, res) => {
+    try {
+        const userId = req.session.user_id; // Get user_id from session 
+        
+        if (!userId) {
+            return res.status(401).json({ message: 'You must be logged in to update a post.' });
+        }
+
+        const dbPostData = await Post.update(
+            {
+                title: req.body.title,
+                content: req.body.content,
+            },
+            {
+                where: {
+                    id: req.params.id,
+                    user_id: userId,
+                },
+            }
+        );
+
+        if (!dbPostData[0] === 0) {
+            res.status(404).json({ message: 'No post found with this id' });
+            return;
+        }
+        res.status(200).json({ message: 'Post updated successfully' });
+    } catch (err) {
+        console.error('Error in update route:', err);
+        res.status(500).json(err);
+    }
+}); 
+
+
+
+
 
   //CREATE new comment
   router.post('/post/:id/comment', async (req, res) => {
